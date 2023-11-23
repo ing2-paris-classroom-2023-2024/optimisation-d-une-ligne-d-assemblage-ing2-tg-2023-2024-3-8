@@ -1,4 +1,3 @@
-ToolSet: 5.0 (local)@C:\Users\super\Documents\MinGW avec Allegro 4\MinGW
-Options: 
+ToolSet: 1.0 (local)Options: 
 
 Options:

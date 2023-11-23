@@ -6,6 +6,8 @@
 #define OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_MAIN_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include "ContrainteTemps.h"
 
 
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_MAIN_H
