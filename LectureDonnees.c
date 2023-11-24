@@ -5,9 +5,8 @@
 #include "LectureDonnees.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "LectureDonnees.h"
 
-int** lireExclusions(int *ordre) {
+int** LireExclusions(int *ordre) {
     int** exclusions;
     FILE *fichier = fopen("exclusions.txt", "r");
 

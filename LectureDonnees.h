@@ -93,7 +93,7 @@ struct {
 //      Prototypes des fonctions de lecture des données
 //////////////////////////////////////////////////////////
 /* Lire le fichier d'exclusion */
-int** lireExclusions(int *ordre);
+int** LireExclusions(int *ordre);
 
 // Lire le Fichier de precedences et constuit le graphe de precedences
 Graphe* LirePrecedences(int taille);

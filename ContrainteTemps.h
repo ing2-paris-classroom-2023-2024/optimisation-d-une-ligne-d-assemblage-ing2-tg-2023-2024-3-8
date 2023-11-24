@@ -48,9 +48,4 @@ void exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     }
 
 }
-
-
-
-
-
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTETEMPS_H
