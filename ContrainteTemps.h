@@ -72,6 +72,7 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     free(tachesCol);
     free(repartCol);
 
+
 }
 
 
