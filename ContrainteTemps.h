@@ -6,11 +6,11 @@
 #define OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTETEMPS_H
 
 
-typedef struct{
-    int id; //chaque poste suit le suivant: une opération b dépedant de a pourra se trouver dans la station n si a est effectué par la station m<n
+typedef struct t_poste{
     int* taches;
     int tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
     int col;//couleur des taches qui y sont (cf algo exclusion)
+    struct t_poste* suivant;
 }poste;
 
 typedef struct{
@@ -21,7 +21,16 @@ typedef struct{
 
 int contraintePrecRespecte(){}//je définis rien pour l'instant, cette fonction dépoendra de la manière dont sont gérées les précédences.
 
-void exclusion(int nbCol,tache* taches,int nbTaches,int T0){
+poste* ajouterPoste(poste* poste1,int taille){
+    poste* poste2= malloc(sizeof(poste*));
+    poste1->suivant=poste2;
+    poste2->taches= malloc(taille*sizeof(tache));
+    poste2->tpsTot=0;
+    poste2->suivant=NULL;
+    return poste2;
+}
+
+poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     tache** tachesCol=malloc(nbCol*(sizeof(tache*)));
     int* repartCol= malloc(nbCol*(sizeof(int)));
     for (int i = 0; i < nbCol; ++i) {
@@ -30,7 +39,7 @@ void exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     for (int i = 0; i < nbCol; ++i){
         repartCol[i]=0;
     }
-    for (int i = 0; i < nbTaches; ++i) {
+    for (int i = 0; i < nbTaches; ++i) {//on met chaque tâche dans la liste qui correspond à sa couleur&
         tachesCol[taches[i].col][repartCol[taches[i].col]]=taches[i];
         repartCol[taches[i].col]++;
     }
@@ -46,6 +55,22 @@ void exclusion(int nbCol,tache* taches,int nbTaches,int T0){
             }
         }
     }
+    int nbTachesEnreg=0;
+    int colorSelec=0;//faudra le faire commencer en fonction de l'instruction l'instruction, penser éventuellement à trier les couleurs
+    poste* postes= malloc(sizeof(poste*));
+    //postes= ajouterPoste();
+    while (nbTachesEnreg<nbTaches){
+        postes= ajouterPoste(postes,repartCol[colorSelec]);
+        for (int i = 0; i < repartCol[colorSelec]; ++i) {
+
+        }
+        colorSelec=(colorSelec+1)%nbCol;//on passe à la couleur suivante (le % signifie modulo)
+    }
+    for (int i = 0; i < nbCol; ++i) {
+        free(tachesCol[i]);
+    }
+    free(tachesCol);
+    free(repartCol);
 
 }
 
