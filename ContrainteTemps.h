@@ -58,21 +58,22 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     int nbTachesEnreg=0;
     int colorSelec=0;//faudra le faire commencer en fonction de l'instruction l'instruction, penser éventuellement à trier les couleurs
     poste* postes= malloc(sizeof(poste*));
-    //postes= ajouterPoste();
+    postes= ajouterPoste(postes,repartCol[colorSelec]);
+    poste* base=postes
     while (nbTachesEnreg<nbTaches){
-        postes= ajouterPoste(postes,repartCol[colorSelec]);
         for (int i = 0; i < repartCol[colorSelec]; ++i) {
 
         }
-        colorSelec=(colorSelec+1)%nbCol;//on passe à la couleur suivante (le % signifie modulo)
+        colorSelec=(colorSelec+1)%nbCol;/*on passe à la couleur suivante (le % signifie modulo)
+        Le plus pertinent ici serait tout de même de trouver un moyen de choisir à chaque fois quelle couleur il vaut mieux utiliser*/
+        postes= ajouterPoste(postes,repartCol[colorSelec]);
     }
     for (int i = 0; i < nbCol; ++i) {
         free(tachesCol[i]);
     }
     free(tachesCol);
     free(repartCol);
-
-
+    return base;
 }
 
 
