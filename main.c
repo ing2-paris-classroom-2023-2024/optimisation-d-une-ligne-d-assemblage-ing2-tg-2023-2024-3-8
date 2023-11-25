@@ -43,6 +43,10 @@ int* wReadFileTimeOperation() {
     printf("Le nombre de lignes est de %d",vNombreLignes);
     fseek(fFile, 0, SEEK_SET);
 
-    sTache  *ListeTache = (sTache *)malloc(vNombreLignes * sizeof(sTache));
+    sTache *tListeTache = (sTache *)malloc(vNombreLignes * sizeof(sTache));
+    for (int i=0;i<vNombreLignes;i++){
+        fscanf(fFile,"%d %f",&tListeTache[i].id,&tListeTache[i].temps);
+    }
+
     return 0;
 }
