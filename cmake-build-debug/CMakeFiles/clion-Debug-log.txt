@@ -1,0 +1,10 @@
+"C:\Program Files\JetBrains\CLion 2022.2.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S C:\Users\Willyson\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8 -B C:\Users\Willyson\CLionProjects\optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8\cmake-build-debug
+-- The C compiler identification is GNU 6.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Users/Willyson/Documents/MinGW/bin/gcc.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done (2.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/Willyson/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/cmake-build-debug
