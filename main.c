@@ -4,14 +4,17 @@
 
 #include "ToolBoxWilliam.h"
 
-int* wReadFileTimeOperation();
+sTache* wReadFileTimeOperation();
 
 int main(){
-    wReadFileTimeOperation();
+    sTache *tListeTache;
+    tListeTache=wReadFileTimeOperation();
+
+
     return 0;
 }
 
-int* wReadFileTimeOperation() {
+sTache * wReadFileTimeOperation() {
 
     //Declaration des variables
     FILE *fFile;
@@ -48,5 +51,5 @@ int* wReadFileTimeOperation() {
         fscanf(fFile,"%d %f",&tListeTache[i].id,&tListeTache[i].temps);
     }
 
-    return 0;
+    return tListeTache;
 }
