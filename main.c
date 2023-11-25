@@ -42,5 +42,7 @@ int* wReadFileTimeOperation() {
     // Utilisez fseek pour déplacer le curseur au début du fichier
     printf("Le nombre de lignes est de %d",vNombreLignes);
     fseek(fFile, 0, SEEK_SET);
+
+    sTache  *ListeTache = (sTache *)malloc(vNombreLignes * sizeof(sTache));
     return 0;
 }
