@@ -7,4 +7,5 @@ include_directories(.)
 
 add_executable(optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8
         main.c
-        main.h LectureDonnees.c LectureDonnees.h ContrainteTemps.h)
+        ToolBoxWilliam.h
+)
