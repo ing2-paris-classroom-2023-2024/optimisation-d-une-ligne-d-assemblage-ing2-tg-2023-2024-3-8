@@ -10,6 +10,7 @@ typedef struct t_poste{
     int* taches;
     int tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
     int col;//couleur des taches qui y sont (cf algo exclusion)
+    int nbTache;
     struct t_poste* suivant;
 }poste;
 
@@ -25,6 +26,7 @@ poste* ajouterPoste(poste* poste1,int taille){
     poste* poste2= malloc(sizeof(poste*));
     poste1->suivant=poste2;
     poste2->taches= malloc(taille*sizeof(tache));
+    poste2->nbTache=0;
     poste2->tpsTot=0;
     poste2->suivant=NULL;
     return poste2;
@@ -59,10 +61,16 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     int colorSelec=0;//faudra le faire commencer en fonction de l'instruction l'instruction, penser éventuellement à trier les couleurs
     poste* postes= malloc(sizeof(poste*));
     postes= ajouterPoste(postes,repartCol[colorSelec]);
-    poste* base=postes
+    poste* base=postes;
     while (nbTachesEnreg<nbTaches){
         for (int i = 0; i < repartCol[colorSelec]; ++i) {
-
+            if(tachesCol[colorSelec][i].temps<(T0-postes->tpsTot) && tachesCol[colorSelec][i].temps>=0){
+                if(/*precedence*/1){
+                    postes->taches[postes->nbTache]=tachesCol[colorSelec][i].id;
+                    postes->nbTache++;
+                    tachesCol[colorSelec][i].temps=-1;
+                }
+            }
         }
         colorSelec=(colorSelec+1)%nbCol;/*on passe à la couleur suivante (le % signifie modulo)
         Le plus pertinent ici serait tout de même de trouver un moyen de choisir à chaque fois quelle couleur il vaut mieux utiliser*/
