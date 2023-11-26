@@ -17,8 +17,7 @@ typedef struct{
 typedef struct{
     int id; //chaque sPoste suit le suivant: une opération b dépedant de a pourra se trouver dans la station n si a est effectué par la station m<n
     int* taches;
-    int tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
-    int col;//couleur des taches qui y sont (cf algo exclusion)
+    float tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
 }sPoste;
 
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_TOOLBOXWILLIAM_H
