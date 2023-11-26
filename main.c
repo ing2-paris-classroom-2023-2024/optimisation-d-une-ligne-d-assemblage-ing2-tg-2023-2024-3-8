@@ -56,20 +56,21 @@ sTache * wReadFileTimeOperation() {
 }
 
 sPoste* wRepartitionStationTemps(sTache* prTabTache) {
-    //Déclaration des variables
-    //Récupération du nombre de taches
+    // Déclaration des variables
     int vNombreTaches = prTabTache[0].id;
-
-    //Création d'une tâche temporaire
     sTache sTacheTemp;
-    //Création de la liste des tâches que l'on modifiera dynamiquement
+
+    // Création de la liste des tâches que l'on modifiera dynamiquement
     sPoste *tListePoste = (sPoste *) malloc((vNombreTaches + 1) * sizeof(sPoste));
 
+    for (int j = 0; j < vNombreTaches + 1; j++) {
+        tListePoste[j].taches = (int *) malloc(sizeof(int));
+        tListePoste[j].taches[0] = 0; // Initialisez la taille du tableau de tâches à 0
+    }
     int vNombreStations = 0; // Nombre de stations actuelles
     float vTempsTotalStation = 0; // Temps total dans la station actuelle
 
-
-    //Tri à bulles
+    // Tri à bulles
     for (int i = 1; i <= vNombreTaches - 1; i++) {
         for (int j = 1; j <= vNombreTaches - i; j++) {
             if (prTabTache[j].temps < prTabTache[j+1].temps) {
@@ -79,6 +80,36 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache) {
             }
         }
     }
+    for (int i = 1; i <= vNombreTaches; i++) {
+        sTache tacheCourante = prTabTache[i];
 
+        if (vTempsTotalStation + tacheCourante.temps <= 10) {
+            // Ajoute l'ID de la tâche à la station actuelle
+            int stationIndex = vNombreStations;
+            int index = tListePoste[stationIndex].taches[0]; // Obtenir la taille actuelle
+            tListePoste[stationIndex].taches[index + 1] = tacheCourante.id;
+            tListePoste[stationIndex].taches[0] = index + 1; // Mettre à jour la taille
+            vTempsTotalStation += tacheCourante.temps;
+        } else {
+            // Crée une nouvelle station
+            vNombreStations++;
+            tListePoste[vNombreStations].id = vNombreStations;
+            // Alloue de l'espace pour le tableau des tâches de la nouvelle station
+            tListePoste[vNombreStations].taches = (int*) malloc(sizeof(int));
+            tListePoste[vNombreStations].taches[0] = 1; // La nouvelle station a 1 tâche
+            tListePoste[vNombreStations].taches[1] = tacheCourante.id;
+            vTempsTotalStation = tacheCourante.temps;
+        }
+    }
+
+    // Affichage du nombre de stations avec les tâches réalisées à l'intérieur
+    printf("Nombre de stations : %d\n", vNombreStations);
+    for (int i = 0; i <= vNombreStations; i++) {
+        printf("Station %d : ", i);
+        for (int j = 1; j <= tListePoste[i].taches[0]; j++) {
+            printf("%d ", tListePoste[i].taches[j]);
+        }
+        printf("\n");
+    }
     return tListePoste;
 }
