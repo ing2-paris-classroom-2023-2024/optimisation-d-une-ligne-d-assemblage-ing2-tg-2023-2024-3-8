@@ -64,7 +64,11 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     poste* base=postes;
     while (nbTachesEnreg<nbTaches){
         for (int i = 0; i < repartCol[colorSelec]; ++i) {
-            if(tachesCol[colorSelec][i].temps<(T0-postes->tpsTot) && tachesCol[colorSelec][i].temps>=0){
+            if(tachesCol[colorSelec][i].temps==0){
+                nbTachesEnreg++;
+                tachesCol[colorSelec][i].temps=-1;
+            }
+            else if(tachesCol[colorSelec][i].temps<(T0-postes->tpsTot) && tachesCol[colorSelec][i].temps>0){
                 if(/*precedence*/1){
                     postes->taches[postes->nbTache]=tachesCol[colorSelec][i].id;
                     postes->nbTache++;
