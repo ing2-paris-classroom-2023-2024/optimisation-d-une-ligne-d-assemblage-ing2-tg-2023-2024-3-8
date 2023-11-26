@@ -1,69 +1,66 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-#define MAX_OP 100
-
-typedef struct {
-    int id;
-    int*taches;
-    int tpsTot;
-    int col;
-} poste;
-
-typedef struct {
-    int id;
-    int col;
-    int temps;
-} tache;
-
-typedef struct {
-    int nombre_operation;
-    int matrice_adj[MAX_OP][MAX_OP];
-} GraphePrecedences;
-
-GraphePrecedences Graphe(int nb_op){
-    GraphePrecedences  graphe;
-    graphe.nombre_operation = nb_op;
-    for (int i = 0; i < nb_op; ++i) {
-        for (int j = 0; j < nb_op; ++j) {
-            graphe.matrice_adj[i][j]=0;
-        }
+int** MatriceAdjacence(int nb_operations){
+    int** matrice=(int**) malloc(nb_operations*sizeof (int*));
+    for (int i = 0; i < nb_operations; i++) {
+        matrice[i]=(int*) calloc(nb_operations, sizeof (int));
     }
-    return graphe;
+    return matrice;
 }
 
-void ajoutContraintePrece(GraphePrecedences* graphe, int op_prece, int op_suiv){
-    graphe->matrice_adj[op_prece-1][op_suiv-1]=1;
+void libereMatrice(int** matrice, int nb_op){
+    for (int i = 0; i < nb_op; i++) {
+        free(matrice[i]);
+    }
+    free(matrice);
 }
 
-void  affiche(GraphePrecedences* graphe){
-    for (int i = 0; i < graphe->nombre_operation; ++i) {
-        for (int j = 0; j < graphe->nombre_operation; ++j) {
-            printf("%d", graphe->matrice_adj[i][j]);
-        }
-        printf("/n");
+void remplirMatrice(const char* nomfichier,int** matrice){
+    FILE* fichier= fopen(nomfichier,"r");
+    if(fichier == NULL){
+        printf("Erreur d'ouverture du fichier");
+        exit(EXIT_FAILURE);
     }
+    int source, final;
+
+    while (fscanf(fichier, "%d %d", &source, &final)==2){
+        matrice[source-1][final-1]=1;
+    }
+    fclose(fichier);
 }
 
 int main(){
-    FILE *fichier = fopen("precedences.txt","r");
-    if (fichier == NULL){
-        fprintf(stderr, "Erreur lors de l'ouverture");
-        return 1;
+    const char* nomfichier ="precedences.txt";
+    FILE* fichier= fopen(nomfichier,"r");
+    if(fichier == NULL){
+        printf("Erreur d'ouverture du fichier");
+        exit(EXIT_FAILURE);
     }
-    int nombre_op;
-    fscanf(fichier,"%d",&nombre_op);
-    GraphePrecedences graphe = Graphe(nombre_op);
-    rewind(fichier);
 
-    char ligne[100];
-    fgets(ligne,sizeof(ligne), fichier);
-    int op_precedente, op_suivante;
-    while (fscanf(fichier,"%d %d", &op_precedente, &op_suivante) == 2 ){
-        ajoutContraintePrece(&graphe, op_precedente,op_suivante);
+    int nb_operations =0;
+    int source, final;
+
+    while (fscanf(fichier,"%d %d", &source, &final)==2){
+        if(source > nb_operations){
+            nb_operations=source;
+        }
+        if(final > nb_operations){
+            nb_operations=final;
+        }
     }
     fclose(fichier);
-    affiche(&graphe);
+
+    int** matriceAdjacence= MatriceAdjacence(nb_operations);
+
+    remplirMatrice(nomfichier,matriceAdjacence);
+
+    for (int i = 0; i < nb_operations; i++) {
+        for (int j = 0; j < nb_operations; j++) {
+            printf("%d ", matriceAdjacence[i][j]);
+        }
+        printf("\n");
+    }
+    libereMatrice(matriceAdjacence,nb_operations);
     return 0;
 }
