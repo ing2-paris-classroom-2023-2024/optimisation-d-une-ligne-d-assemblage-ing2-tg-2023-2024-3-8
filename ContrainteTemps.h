@@ -33,8 +33,8 @@ poste* ajouterPoste(poste* poste1,int taille){
 }
 
 poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
-    tache** tachesCol=malloc(nbCol*(sizeof(tache*)));
-    int* repartCol= malloc(nbCol*(sizeof(int)));
+    tache** tachesCol=malloc(nbCol*(sizeof(tache**)));
+    int* repartCol= malloc(nbCol*(sizeof(int*)));
     for (int i = 0; i < nbCol; ++i) {
         tachesCol[i]= malloc(nbTaches*sizeof(tache));
     }
@@ -63,10 +63,16 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     postes= ajouterPoste(postes,repartCol[colorSelec]);
     poste* base=postes;
     while (nbTachesEnreg<nbTaches){
+        printf("passageYouhouuu\n");
         for (int i = 0; i < repartCol[colorSelec]; ++i) {
-            if(tachesCol[colorSelec][i].temps<(T0-postes->tpsTot) && tachesCol[colorSelec][i].temps>=0){
+            if(tachesCol[colorSelec][i].temps==0){
+                nbTachesEnreg++;
+                tachesCol[colorSelec][i].temps=-1;
+            }
+            else if(tachesCol[colorSelec][i].temps<(T0-postes->tpsTot) && tachesCol[colorSelec][i].temps>0){
                 if(/*precedence*/1){
                     postes->taches[postes->nbTache]=tachesCol[colorSelec][i].id;
+                    nbTachesEnreg++;
                     postes->nbTache++;
                     tachesCol[colorSelec][i].temps=-1;
                 }
