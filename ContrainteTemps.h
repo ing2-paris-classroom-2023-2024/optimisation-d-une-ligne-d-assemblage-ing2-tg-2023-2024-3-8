@@ -8,7 +8,7 @@
 
 typedef struct t_poste{
     int* taches;
-    int tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
+    float tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
     int col;//couleur des taches qui y sont (cf algo exclusion)
     int nbTache;
     struct t_poste* suivant;
@@ -17,7 +17,7 @@ typedef struct t_poste{
 typedef struct{
     int id;
     int col;
-    int temps;
+    float temps;
 }tache;
 
 int contraintePrecRespecte(){}//je définis rien pour l'instant, cette fonction dépoendra de la manière dont sont gérées les précédences.
@@ -49,7 +49,7 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     for (int i = 0; i < nbCol; ++i) {//Tri à bulles pour avoir, dans chaque couleur, les tâches triées par ordre de temps
         for (int j = 0; j < repartCol[i]-1; ++j) {
             for (int k = 0; k < repartCol[i]-j-1; ++k) {
-                if(tachesCol[i][k].temps>tachesCol[i][k+1].temps){
+                if(tachesCol[i][k].temps<tachesCol[i][k+1].temps){
                     temp= tachesCol[i][k+1];
                     tachesCol[i][k+1]=tachesCol[i][k];
                     tachesCol[i][k]=temp;
@@ -62,8 +62,9 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
     poste* postes= malloc(sizeof(poste*));
     postes= ajouterPoste(postes,repartCol[colorSelec]);
     poste* base=postes;
+    int indicapost=0;//compte les postes passés (utile pour le débuggage)
     while (nbTachesEnreg<nbTaches){
-        printf("passageYouhouuu\n");
+        printf("Fin de boucle: passage au poste suivant\n");
         for (int i = 0; i < repartCol[colorSelec]; ++i) {
             if(tachesCol[colorSelec][i].temps==0){
                 nbTachesEnreg++;
@@ -71,16 +72,26 @@ poste* exclusion(int nbCol,tache* taches,int nbTaches,int T0){
             }
             else if(tachesCol[colorSelec][i].temps<(T0-postes->tpsTot) && tachesCol[colorSelec][i].temps>0){
                 if(/*precedence*/1){
+                    printf("Tache: %d Temps: %f\n", tachesCol[colorSelec][i].id, tachesCol[colorSelec][i].temps);
+                    printf("acceptee dans le poste %d\n", indicapost);
                     postes->taches[postes->nbTache]=tachesCol[colorSelec][i].id;
                     nbTachesEnreg++;
                     postes->nbTache++;
+                    postes->tpsTot+=tachesCol[colorSelec][i].temps;
                     tachesCol[colorSelec][i].temps=-1;
                 }
+            }
+            else if(tachesCol[colorSelec][i].temps>T0){
+                printf("ERREUR: UNE TACHE EST PLUS LONGUE QUE LE TEMPS DE CYCLE: ELLE NE SERA PAS COMPTABILISEE\n");
+                nbTachesEnreg++;
+                tachesCol[colorSelec][i].temps=-1;
             }
         }
         colorSelec=(colorSelec+1)%nbCol;/*on passe à la couleur suivante (le % signifie modulo)
         Le plus pertinent ici serait tout de même de trouver un moyen de choisir à chaque fois quelle couleur il vaut mieux utiliser*/
+        printf("Temps total du poste: %f/%d\n",postes->tpsTot,T0);
         postes= ajouterPoste(postes,repartCol[colorSelec]);
+        indicapost++;
     }
     for (int i = 0; i < nbCol; ++i) {
         free(tachesCol[i]);

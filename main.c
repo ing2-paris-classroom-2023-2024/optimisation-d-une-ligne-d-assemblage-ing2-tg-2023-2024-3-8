@@ -13,6 +13,6 @@ int main(){
     tache* taches= NULL;
     taches=wReadFileTimeOperation(&nbTaches);
     /*printf("c'est pas la faute du voisin de gauche");*/
-    postes= exclusion(1,taches,nbTaches,1);
+    postes= exclusion(1,taches,nbTaches,5);
     return 0;
 }
