@@ -17,7 +17,7 @@ typedef struct t_poste{
 typedef struct{
     int id;
     int col;
-    int temps;
+    float temps;
 }tache;
 
 int contraintePrecRespecte(){}//je définis rien pour l'instant, cette fonction dépoendra de la manière dont sont gérées les précédences.
