@@ -71,7 +71,12 @@ CMakeFiles/optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir/Affic
   C:/MinGW/include/oleauto.h \
   C:/MinGW/include/oaidl.h \
   C:/MinGW/include/oleidl.h \
-  C:/MinGW/include/conio.h
+  C:/MinGW/include/unistd.h \
+  C:/MinGW/include/io.h \
+  C:/MinGW/include/sys/types.h \
+  C:/MinGW/include/stdint.h \
+  C:/MinGW/include/process.h \
+  C:/MinGW/include/getopt.h
 
 
 C:/MinGW/include/ddeml.h:
@@ -146,6 +151,8 @@ C:/MinGW/include/rpcnsi.h:
 
 C:/MinGW/include/winuser.h:
 
+C:/MinGW/include/io.h:
+
 C:/MinGW/include/sys/bsdtypes.h:
 
 C:/MinGW/include/dbt.h:
@@ -212,4 +219,10 @@ C:/MinGW/include/oaidl.h:
 
 C:/MinGW/include/oleidl.h:
 
-C:/MinGW/include/conio.h:
+C:/MinGW/include/unistd.h:
+
+C:/MinGW/include/stdint.h:
+
+C:/MinGW/include/process.h:
+
+C:/MinGW/include/getopt.h:

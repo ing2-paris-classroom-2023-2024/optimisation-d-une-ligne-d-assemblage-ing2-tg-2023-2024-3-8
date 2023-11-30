@@ -36,4 +36,6 @@ CMakeFiles/optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir/Affic
  c:\mingw\include\objidl.h c:\mingw\include\cguid.h \
  c:\mingw\include\olectlid.h c:\mingw\include\oleauto.h \
  c:\mingw\include\oaidl.h c:\mingw\include\oleidl.h \
- c:\mingw\include\conio.h
+ c:\mingw\include\unistd.h c:\mingw\include\io.h \
+ c:\mingw\include\sys\types.h c:\mingw\include\stdint.h \
+ c:\mingw\include\process.h c:\mingw\include\getopt.h
