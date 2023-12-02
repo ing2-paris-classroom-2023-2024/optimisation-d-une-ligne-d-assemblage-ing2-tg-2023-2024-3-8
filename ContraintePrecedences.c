@@ -38,7 +38,7 @@ void remplirMatrice(const char* nomfichier,int** matrice){
 }
 
 // Fonction principal
-int main(){
+int caPrecedence(){
     const char* nomfichier ="precedences.txt";
     FILE* fichier= fopen(nomfichier,"r");
     if(fichier == NULL){
