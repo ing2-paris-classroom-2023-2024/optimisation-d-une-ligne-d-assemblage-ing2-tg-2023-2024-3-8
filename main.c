@@ -4,17 +4,19 @@
 
 #include "ToolBoxWilliam.h"
 
-sTache* wReadFileTimeOperation();
-sPoste* wRepartitionStationTemps(sTache* prTabTache);
+sTache* wReadFileTimeOperation(int* prTempsDeCycle);
+sPoste* wRepartitionStationTemps(sTache* prTabTache,int prTempsDeCycle);
 
 int main(){
     sTache *tListeTache;
-    tListeTache=wReadFileTimeOperation();
-    wRepartitionStationTemps(tListeTache);
+    int vTempsDeCycle=0;
+    int *pTempsDeCycle=&vTempsDeCycle;
+    tListeTache=wReadFileTimeOperation(pTempsDeCycle);
+    wRepartitionStationTemps(tListeTache,vTempsDeCycle);
     return 0;
 }
 
-sTache * wReadFileTimeOperation() {
+sTache * wReadFileTimeOperation(int* prTempsDeCycle) {
 
     //Declaration des variables
     FILE *fFile;
@@ -51,11 +53,18 @@ sTache * wReadFileTimeOperation() {
     for (int i=1;i<vNombreLignes+1;i++){
         fscanf(fFile,"%d %f",&tListeTache[i].id,&tListeTache[i].temps);
     }
+    fclose(fFile);
 
+    fFile= fopen("temps_cycle.txt","r");
+    if (fFile == NULL) {
+        printf("File reading error");
+    }
+    fscanf(fFile,"%d",prTempsDeCycle);
+    fclose(fFile);
     return tListeTache;
 }
 
-sPoste* wRepartitionStationTemps(sTache* prTabTache) {
+sPoste* wRepartitionStationTemps(sTache* prTabTache, int prTempsDeCycle) {
     // Déclaration des variables
     int vNombreTaches = prTabTache[0].id;
     sTache sTacheTemp;
