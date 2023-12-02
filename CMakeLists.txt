@@ -5,6 +5,4 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(.)
 
-add_executable(optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8
-        main.c
-        main.h LectureDonnees.c LectureDonnees.h Exclusionalexandre.c Exclusionalexandre.h)
+add_executable(optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8 Exclusionalexandre.c Exclusionalexandre.h timeOperation.c ToolBoxWilliam.h)
