@@ -4,19 +4,19 @@
 
 #include "ToolBoxWilliam.h"
 
-sTache* wReadFileTimeOperation(int* prTempsDeCycle);
-sPoste* wRepartitionStationTemps(sTache* prTabTache,int prTempsDeCycle);
+sTache* wReadFileTimeOperation(float* prTempsDeCycle);
+sPoste* wRepartitionStationTemps(sTache* prTabTache,float prTempsDeCycle);
 
 int main(){
     sTache *tListeTache;
-    int vTempsDeCycle=0;
-    int *pTempsDeCycle=&vTempsDeCycle;
+    float vTempsDeCycle=0;
+    float *pTempsDeCycle=&vTempsDeCycle;
     tListeTache=wReadFileTimeOperation(pTempsDeCycle);
     wRepartitionStationTemps(tListeTache,vTempsDeCycle);
     return 0;
 }
 
-sTache * wReadFileTimeOperation(int* prTempsDeCycle) {
+sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
 
     //Declaration des variables
     FILE *fFile;
@@ -64,7 +64,7 @@ sTache * wReadFileTimeOperation(int* prTempsDeCycle) {
     return tListeTache;
 }
 
-sPoste* wRepartitionStationTemps(sTache* prTabTache, int prTempsDeCycle) {
+sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
     // Déclaration des variables
     int vNombreTaches = prTabTache[0].id;
     sTache sTacheTemp;
@@ -92,7 +92,7 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, int prTempsDeCycle) {
     for (int i = 1; i <= vNombreTaches; i++) {
         sTache tacheCourante = prTabTache[i];
 
-        if (vTempsTotalStation + tacheCourante.temps <= 10) {
+        if (vTempsTotalStation + tacheCourante.temps <= prTempsDeCycle) {
             // Ajoute l'ID de la tâche à la station actuelle
             int stationIndex = vNombreStations;
             int index = tListePoste[stationIndex].taches[0]; // Obtenir la taille actuelle
