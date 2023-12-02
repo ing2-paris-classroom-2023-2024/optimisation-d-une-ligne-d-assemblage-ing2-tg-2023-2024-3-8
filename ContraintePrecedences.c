@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "ToolBoxWilliam.h"
+
 // Fonction qui créer la matrice d'adjacence
 int** MatriceAdjacence(int nb_operations){
     int** matrice=(int**) malloc(nb_operations*sizeof (int*));
@@ -39,7 +41,7 @@ void remplirMatrice(const char* nomfichier,int** matrice){
 
 // Fonction principal
 int caPrecedence(){
-    const char* nomfichier ="precedences.txt";
+    const char* nomfichier ="../FichiersTxt/precedences.txt";
     FILE* fichier= fopen(nomfichier,"r");
     if(fichier == NULL){
         printf("Erreur d'ouverture du fichier");

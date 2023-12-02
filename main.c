@@ -12,6 +12,7 @@ int main(){
     float *pTempsDeCycle=&vTempsDeCycle;
     tListeTache=wReadFileTimeOperation(pTempsDeCycle);
     wRepartitionStationTemps(tListeTache,vTempsDeCycle);
+    caPrecedence();
     return 0;
 }
 

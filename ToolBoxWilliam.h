@@ -22,7 +22,11 @@ typedef struct{
 }sPoste;
 
 //Prototype des programmes
+
+//Temps de cycle et lecture fichier
 sTache* wReadFileTimeOperation(float* prTempsDeCycle);
 sPoste* wRepartitionStationTemps(sTache* prTabTache,float prTempsDeCycle);
-sTache * wReadFileTimeOperation(float* prTempsDeCycle);
+
+//Precedence
+int caPrecedence();
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_TOOLBOXWILLIAM_H
