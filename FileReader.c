@@ -20,6 +20,7 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     //Vérification de l'ouverture du fichier
     if (fFile == NULL) {
         printf("Erreur dans l'ouverture d'operations.txt");
+        exit(EXIT_FAILURE);
     }
 
 
@@ -46,6 +47,7 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     fFile= fopen("../FichiersTxt/temps_cycle.txt","r");
     if (fFile == NULL) {
         printf("Erreur dans l'ouverture de temps_cycle.txt");
+        exit(EXIT_FAILURE);
     }
     fscanf(fFile,"%f",prTempsDeCycle);
     fclose(fFile);
