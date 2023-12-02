@@ -39,6 +39,42 @@ void remplirMatrice(const char* nomfichier,int** matrice){
     fclose(fichier);
 }
 
+
+void triTopologique(int** matrice, int nb_sommets) {
+    int pred[nb_sommets];
+    int queue[nb_sommets], front = 0, rear = -1;
+
+    // Compter les prédécesseurs
+    for (int i = 0; i < nb_sommets; i++) {
+        pred[i] = 0;
+        for (int j = 0; j < nb_sommets; j++) {
+            pred[i] += matrice[j][i];
+        }
+    }
+
+    // Ajouter les sommets sans prédécesseurs dans la file d'attente
+    for (int i = 0; i < nb_sommets; i++) {
+        if (pred[i] == 0) {
+            queue[++rear] = i;
+        }
+    }
+
+    // Tri topologique
+    printf("Ordre topologique : ");
+    while (front <= rear) {
+        int sommet = queue[front++];
+
+        printf("%d ", sommet + 1); // Ajouter 1 pour l'indexation à partir de 1
+
+        for (int i = 0; i < nb_sommets; i++) {
+            if (matrice[sommet][i] == 1 && --pred[i] == 0) {
+                queue[++rear] = i;
+            }
+        }
+    }
+    printf("\n");
+}
+
 // Fonction principal
 int caPrecedence(){
     const char* nomfichier ="../FichiersTxt/precedences.txt";
@@ -75,6 +111,7 @@ int caPrecedence(){
         }
         printf("\n");
     }
+    triTopologique(matriceAdjacence,nb_operations);
     // Libère la mémoire de la matrice
     libereMatrice(matriceAdjacence,nb_operations);
     return 0;

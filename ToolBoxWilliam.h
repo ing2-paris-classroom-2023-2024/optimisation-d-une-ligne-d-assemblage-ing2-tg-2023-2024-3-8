@@ -8,11 +8,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
-typedef struct{
+typedef struct Tache{
     int id;
     int col;
     float temps;
+    int nbPrecedentes;
+    int *tListeTachePrecedente;
 }sTache;
 
 typedef struct{
@@ -28,5 +31,6 @@ sTache* wReadFileTimeOperation(float* prTempsDeCycle);
 sPoste* wRepartitionStationTemps(sTache* prTabTache,float prTempsDeCycle);
 
 //Precedence
+ void wReadFilePrecedentOperation(sTache *prListeTache);
 int caPrecedence();
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_TOOLBOXWILLIAM_H

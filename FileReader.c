@@ -51,5 +51,40 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     }
     fscanf(fFile,"%f",prTempsDeCycle);
     fclose(fFile);
+
+    wReadFilePrecedentOperation(tListeTache);
     return tListeTache;
+}
+//---------------------------------------------------------------------------------------------------------------------
+void wReadFilePrecedentOperation(sTache *prListeTache) {
+    FILE *fFile;
+    int precedent, actuel;
+
+    fFile = fopen("../FichiersTxt/precedences.txt", "r");
+    if (fFile == NULL) {
+        printf("Erreur dans l'ouverture du fichier precedence.txt");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 1; i <= prListeTache[0].id; i++) {
+        prListeTache[i].tListeTachePrecedente = NULL;
+        prListeTache[i].nbPrecedentes = 0;
+    }
+
+    while (fscanf(fFile, "%d %d", &precedent, &actuel) == 2) {
+        for(int i=1;i<prListeTache[0].id;i++){
+            if(prListeTache[i].id==actuel){
+                prListeTache[i].nbPrecedentes++;
+                int *temp = realloc(prListeTache[i].tListeTachePrecedente, prListeTache[i].nbPrecedentes * sizeof(int));
+                if (temp == NULL) {
+                    printf("Erreur d'allocation");
+                    exit(EXIT_FAILURE);
+                } else {
+                    prListeTache[i].tListeTachePrecedente = temp;
+                    prListeTache[i].tListeTachePrecedente[prListeTache[i].nbPrecedentes - 1] = precedent;
+                }
+            }
+        }
+    }
+    fclose(fFile);
 }
