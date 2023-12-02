@@ -59,25 +59,33 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     if (fFile == NULL) {
         printf("File reading error");
     }
-    fscanf(fFile,"%d",prTempsDeCycle);
+    fscanf(fFile,"%f",prTempsDeCycle);
     fclose(fFile);
     return tListeTache;
 }
 
 sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
-    // Déclaration des variables
+//https://www.geeksforgeeks.org/program-best-fit-algorithm-memory-management/ UTilisation d'un algorithmme de type best fit
+    //Nombre de taches
     int vNombreTaches = prTabTache[0].id;
-    sTache sTacheTemp;
 
-    // Création de la liste des tâches que l'on modifiera dynamiquement
+
+    //Variables pour les stations
+        //Création d'une liste de vNombreTaches stations
     sPoste *tListePoste = (sPoste *) malloc((vNombreTaches + 1) * sizeof(sPoste));
+        //Index de la station (commence à -1 car le numéro de la station commence à 0)
+    int vIndexStation = -1;
+        //Tableau contenant les temps totaux de chaque station
+    float *vTempsParStation = (float *) malloc((vNombreTaches + 1) * sizeof(float));
+
+    //Variable temporaire pour le tri à bulles
+    sTache sTacheTemp;
 
     for (int j = 0; j < vNombreTaches + 1; j++) {
         tListePoste[j].taches = (int *) malloc(sizeof(int));
-        tListePoste[j].taches[0] = 0; // Initialisez la taille du tableau de tâches à 0
+        tListePoste[j].taches[0] = 0; // Initialise la taille du tableau de tâches à 0
+        vTempsParStation[j] = 0; // Initialise le temps total de chaque station à 0
     }
-    int vNombreStations = 0; // Nombre de stations actuelles
-    float vTempsTotalStation = 0; // Temps total dans la station actuelle
 
     // Tri à bulles
     for (int i = 1; i <= vNombreTaches - 1; i++) {
@@ -89,35 +97,69 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
             }
         }
     }
-    for (int i = 1; i <= vNombreTaches; i++) {
-        sTache tacheCourante = prTabTache[i];
 
-        if (vTempsTotalStation + tacheCourante.temps <= prTempsDeCycle) {
-            // Ajoute l'ID de la tâche à la station actuelle
-            int stationIndex = vNombreStations;
-            int index = tListePoste[stationIndex].taches[0]; // Obtenir la taille actuelle
-            tListePoste[stationIndex].taches[index + 1] = tacheCourante.id;
-            tListePoste[stationIndex].taches[0] = index + 1; // Mettre à jour la taille
-            vTempsTotalStation += tacheCourante.temps;
-        } else {
-            // Crée une nouvelle station
-            vNombreStations++;
-            tListePoste[vNombreStations].id = vNombreStations;
-            // Alloue de l'espace pour le tableau des tâches de la nouvelle station
-            tListePoste[vNombreStations].taches = (int*) malloc(sizeof(int));
-            tListePoste[vNombreStations].taches[0] = 1; // La nouvelle station a 1 tâche
-            tListePoste[vNombreStations].taches[1] = tacheCourante.id;
-            vTempsTotalStation = tacheCourante.temps;
+    //Boucle principale
+    for (int vTaches = 1; vTaches <= vNombreTaches; vTaches++) {
+        //On parcourt chaque tache et on la stocke dans une variable temporaire
+        sTache tacheCourante = prTabTache[vTaches];
+        //la tache pour l'instant n'est pas placé
+        bool TachePlace = false;
+
+        // Veirifie toutes les stations existantes pour placer la tâche
+        for (int vNumeroStationExistantes = 0; vNumeroStationExistantes <= vIndexStation; vNumeroStationExistantes++) {
+            //Contrainte de temps
+            if (vTempsParStation[vNumeroStationExistantes] + tacheCourante.temps <= prTempsDeCycle) {
+                // Ajoute la tâche à cette station
+
+                //Stocke le nombre de taches de la station dans le premier élement de la station
+                int vNombreTacheStation = tListePoste[vNumeroStationExistantes].taches[0];
+
+                //Realloue le tableau des taches de la station pour y accueilir uniquement les taches qui sont dedans
+                tListePoste[vNumeroStationExistantes].taches = realloc(tListePoste[vNumeroStationExistantes].taches,
+                                                                       (vNombreTacheStation + 2) * sizeof(int));
+
+                //Ajoute la tache au vNombreTacheStation+1 ème élement du tableau
+                tListePoste[vNumeroStationExistantes].taches[vNombreTacheStation + 1] = tacheCourante.id;
+
+                tListePoste[vNumeroStationExistantes].taches[0] =
+                        vNombreTacheStation + 1; // Mets à jour le nombre de tâches
+                vTempsParStation[vNumeroStationExistantes] += tacheCourante.temps;//Met à jour le temps total de la station
+                TachePlace = true;//La tache est placé
+                break;
+            }
+        }
+
+        // Si la tâche ne peut être placée dans aucune station existante, créer une nouvelle station
+        if (!TachePlace) {
+            vIndexStation++;
+            tListePoste[vIndexStation].id = vIndexStation;
+            tListePoste[vIndexStation].taches = (int *) realloc(tListePoste[vIndexStation].taches, 2 * sizeof(int));
+            tListePoste[vIndexStation].taches[0] = 1; // Initialiser à 1 tâche
+            tListePoste[vIndexStation].taches[1] = tacheCourante.id;
+            vTempsParStation[vIndexStation] = tacheCourante.temps;
         }
     }
+    //Utilisation d'une variable temporaire pour redimmensionner la liste des stations convenablement
+    sPoste *temp = realloc(tListePoste, (vIndexStation + 1) * sizeof(sPoste));
+
+    // Vérifiez si realloc a réussi
+    if (temp == NULL) {
+        free(tListePoste);
+        return NULL;
+    }
+    tListePoste = temp;
+
+    // Libérer la mémoire pour vTempsParStation
+    free(vTempsParStation);
 
     // Affichage du nombre de stations avec les tâches réalisées à l'intérieur
-    printf("Nombre de stations : %d\n", vNombreStations);
-    for (int i = 0; i <= vNombreStations; i++) {
+    printf("Nombre de stations : %d\n", vIndexStation + 1);
+    for (int i = 0; i <= vIndexStation; i++) {
         printf("Station %d : ", i);
         for (int j = 1; j <= tListePoste[i].taches[0]; j++) {
             printf("%d ", tListePoste[i].taches[j]);
         }
+        printf("Nombre de taches dans la station: %d",tListePoste[i].taches[0]);
         printf("\n");
     }
     return tListePoste;
