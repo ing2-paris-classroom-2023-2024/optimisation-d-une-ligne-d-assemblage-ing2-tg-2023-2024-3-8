@@ -63,7 +63,6 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     fclose(fFile);
     return tListeTache;
 }
-
 sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
 //https://www.geeksforgeeks.org/program-best-fit-algorithm-memory-management/ UTilisation d'un algorithmme de type best fit
     //Nombre de taches
