@@ -32,7 +32,9 @@ sTache * wReadFileTimeOperation() {
     if (v2 != '\n')
         vNombreLignes++; /* Dernière ligne non finie */
     // Utilisez fseek pour déplacer le curseur au début du fichier
-    printf("Le nombre de lignes est de %d",vNombreLignes);
+#ifdef DEBUG
+    printf("Le nombre de lignes lues est de %d\n",vNombreLignes);
+#endif
     fseek(fFile, 0, SEEK_SET);
 
     sTache *tListeTache = (sTache *)malloc((vNombreLignes+1) * sizeof(sTache));
@@ -50,7 +52,6 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
     int vNombreTaches = prTabTache[0].id;
     sTache sTacheTemp;
 
-
     // Création de la liste des postes que l'on modifiera dynamiquement
     sPoste *tListePoste = (sPoste *) malloc((vNombreTaches + 1) * sizeof(sPoste));
 
@@ -64,7 +65,7 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
     // Tri à bulles
     for (int i = 1; i <= vNombreTaches - 1; i++) {
         for (int j = 0; j <= vNombreTaches - i; j++) {
-            if (prTabTache[j].temps < prTabTache[j+1].temps || prTabTache[j].col != col) {
+            if (prTabTache[j].temps < prTabTache[j+1].temps && prTabTache[j].col == col) {
                 sTacheTemp = prTabTache[j];
                 prTabTache[j] = prTabTache[j+1];
                 prTabTache[j+1] = sTacheTemp;
@@ -107,7 +108,7 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
     }
 
     // Affichage du nombre de stations avec les tâches réalisées à l'intérieur
-    printf("\nNombre de stations intial : %d\n", vNombreStations+1);
+    //printf("\nNombre de stations intial : %d\n", vNombreStations+1);
     for (int i = 0; i <= vNombreStations; i++) {
         printf("Station %d-%d : Ts=%f : ", col, i, tListePoste[i].tpsTot);
         for (int j = 1; j <= tListePoste[i].taches[0]; j++) {
