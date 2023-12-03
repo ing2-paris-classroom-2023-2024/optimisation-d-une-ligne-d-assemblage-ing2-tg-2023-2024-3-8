@@ -1,6 +1,6 @@
 #define ignorerPrecedence 1
-#define ignorerTemps 0
-#define ignorerCouleur 0
+#define ignorerTemps 1
+#define ignorerCouleur 1
 
 #include <stdio.h>
 #include <stdlib.h>

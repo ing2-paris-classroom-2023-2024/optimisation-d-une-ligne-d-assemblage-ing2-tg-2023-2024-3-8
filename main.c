@@ -6,7 +6,7 @@
 
 
 
-// fonction qui change les couleurs de la console
+// fonction qui change les couleurs de la console source: openclassroom
 void couleur(int t, int f){
     HANDLE couleur = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(couleur,f*16+t);
