@@ -18,7 +18,7 @@ poste* ajouterPoste(poste* poste1,int taille){
 
 
 
-poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPrec){
+poste* exclusion(tache* taches,int nbTaches,float T0,int** MatricePrec,int idMaxPrec){
     int nbCol=0;
 
     int idmax=0;
@@ -101,7 +101,7 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
         //printf("passage a la couleur %d\n",colorSelec);
 
         if(!(postes->tpsTot==0)){
-            printf("Temps total du poste: %f/%d (couleur:%d)\n",postes->tpsTot,T0,postes->col);
+            printf("Temps total du poste: %f/%f (couleur:%d)\n",postes->tpsTot,T0,postes->col);
             indicapost++;
         }
         if(nbTachesEnreg<nbTaches ){
@@ -110,7 +110,7 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
             }
             else {
                 postes = ajouterPoste(postes, repartCol[colorSelec]);
-                printf("\nfin de boucle: passage au poste %d\n", indicapost);
+                printf("\nPassage au poste [%d]:\n", indicapost);
             }
         }
         //postes= ajouterPoste(postes,repartCol[colorSelec]);

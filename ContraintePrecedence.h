@@ -64,8 +64,8 @@ int precedence(poste* base,int sommet,int idMax,int** matricePrec){
 }
 
 int determinerCouleur(poste* base,int idMax,int** matricePrec, tache** tachesCol,int* repartCol,int nbCol){
-    int maxCol=0;
-    int colI;
+    float maxCol=0;
+    float colI;
     int bonCol;
     int valide;
     //printf("nbcol :%d\n",nbCol);
@@ -75,7 +75,8 @@ int determinerCouleur(poste* base,int idMax,int** matricePrec, tache** tachesCol
             //printf("%d",tachesCol[i][j].id);
             //printf("(%d) ",valide);
             valide=precedence(base,tachesCol[i][j].id,idMax,matricePrec);
-            if(valide==1 && tachesCol[i][j].temps!=-1) colI++;
+            if(valide==1 && tachesCol[i][j].temps!=-1)
+                    colI=colI+tachesCol[i][j].temps;
         }
         //printf("\n ->%d \n",i);
         if(maxCol<colI) {
@@ -85,7 +86,7 @@ int determinerCouleur(poste* base,int idMax,int** matricePrec, tache** tachesCol
     }
     //printf("Sortie de DeterminerCouleur\n");
     return bonCol;
-}
+}//Cette fonction sélectionna la couleur dans laquelle le temps cumulé des contraintes disponnibles est le plus important
 
 
 
