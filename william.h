@@ -1,9 +1,7 @@
 
 #ifndef OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_WILLIAM_H
 #define OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_WILLIAM_H
-#include "structures.h"
-#include "stdio.h"
-#include "stdlib.h"
+
 
 tache* test(){
     printf("oui");

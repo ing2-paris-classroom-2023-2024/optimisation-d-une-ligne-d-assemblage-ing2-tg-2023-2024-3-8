@@ -1,6 +1,6 @@
-#define ignorerPrecedence 1
+#define ignorerPrecedence 0
 #define ignorerTemps 1
-#define ignorerCouleur 1
+#define ignorerCouleur 0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,6 +8,7 @@
 #include "ContraintePrecedences.h"
 #include "ContrainteTemps.h"
 #include "william.h"
+#include "Exclusion_et_Exclusion_TempsDeCycles.h"
 
 
 int Les3(){

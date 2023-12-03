@@ -1,10 +1,6 @@
 
 #ifndef OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTETEMPS_H
 #define OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTETEMPS_H
-#include "stdlib.h"
-#include "structures.h"
-#include "stdio.h"
-#include "ContraintePrecedences.h"
 #include "Exclusion_et_Exclusion_TempsDeCycles.h"
 
 poste* ajouterPoste(poste* poste1,int taille){

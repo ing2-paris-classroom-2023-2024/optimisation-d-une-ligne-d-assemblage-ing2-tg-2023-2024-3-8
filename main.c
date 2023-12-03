@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "Exclusion_et_Exclusion_TempsDeCycles.h"
 #include "Les3.h"
+#include "Precedences_Temps_De_cycles.h"
 
 
 
@@ -70,7 +71,7 @@ void AffichePreceEtTpsC(){
            "                     \\|__|     \\|__|\\|__|\\|_______|        \\|_______|   \\|__|            \\|__|  \\|__|    |\\_________\\\n"
            "                                                                                                         \\|_________|");
     couleur(3,0);
-    printf("                ///////////////////////////////////////////////////////////////////////////////////////////////////\n\n");
+    printf("                   ///////////////////////////////////////////////////////////////////////////////////////////////////\n\n");
 }
 
 // Ascii art de la contrainte d'exclusion et de temps de cycle
@@ -147,6 +148,7 @@ int main(){
                 // Montre la contrainte de precedence et de temps de cycle
                 AffichePreceEtTpsC();
                 // fonction precedence et temps de cycle
+                prec_tps_cycles();
                 getchar();
                 fflush(stdin);
                 break;
