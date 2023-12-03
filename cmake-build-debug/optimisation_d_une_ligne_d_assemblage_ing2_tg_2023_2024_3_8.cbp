@@ -76,10 +76,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/ContraintePrecedences.c">
-			<Option target="optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8"/>
-		</Unit>
-		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/ContraintePrecedences.h">
+		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/ExclusionPrecedences.c">
 			<Option target="optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8"/>
 		</Unit>
 		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/Exclusionalexandre.h">
