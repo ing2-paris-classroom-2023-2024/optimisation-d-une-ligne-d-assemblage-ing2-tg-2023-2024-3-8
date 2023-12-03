@@ -56,7 +56,6 @@ int wCalculerDegreeEntree(sTache *prTache, sTache *prlisteTache, int nbTaches) {
     prTache->degreeEntree = degre;
     return degre;
 }
-
 sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre) {
     // Initialiser les degrés d'entrée et les marques
     for (int i = 0; i < prParametre->cNombreOperations; i++) {
@@ -92,7 +91,6 @@ sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre) {
             sansSuccesseurs[countSans++] = prListeTache[i];
         }
     }
-
     // Fusionner les listes dans l'ordre souhaité
     memcpy(prListeTache, avecSuccesseurs, countAvec * sizeof(sTache));
     memcpy(prListeTache + countAvec, sansSuccesseurs, countSans * sizeof(sTache));
@@ -107,7 +105,6 @@ sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre) {
         int id = getId(i, prListeTache);
         printf("Tache %d (degre %d)\n", id, prListeTache[i].degreeEntree);
     }
-
     return prListeTache;
 }
 
