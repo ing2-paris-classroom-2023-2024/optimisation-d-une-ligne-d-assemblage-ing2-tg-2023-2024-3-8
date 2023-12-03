@@ -156,7 +156,8 @@ int main(){
                 // Montre la contrainte d'exclusion et de temps de cycle
                 AfficheExclusionEtTpsC();
                 // fonction Exclusion et temps de cycle
-                exclusionEtTempsCycle();
+                int nbInFine = exclusionEtTempsCycle();
+                printf("\nNombre de stations final : %d\n\n",nbInFine);
                 getchar();
                 fflush(stdin);
                 break;
