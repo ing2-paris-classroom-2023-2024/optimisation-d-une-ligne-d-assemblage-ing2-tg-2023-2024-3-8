@@ -80,7 +80,7 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
                 //printf("%d\n",tachesCol[colorSelec][i].id);
                 if(IgnorerPrecedence ||precedence(base,tachesCol[colorSelec][i].id,idMaxPrec,MatricePrec)){
                     printf("Tache: %d | Couleur : %d | Temps: %f\n", tachesCol[colorSelec][i].id,tachesCol[colorSelec][i].col, tachesCol[colorSelec][i].temps);
-                    printf("acceptee dans le poste %d\n", indicapost);
+                    //printf("acceptee dans le poste %d\n", indicapost);
                     postes->taches[postes->nbTache]=tachesCol[colorSelec][i].id;
                     nbTachesEnreg++;
                     postes->nbTache++;
