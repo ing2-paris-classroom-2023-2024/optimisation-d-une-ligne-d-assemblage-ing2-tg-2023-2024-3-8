@@ -13,3 +13,4 @@ add_executable(optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8
         FileReader.c
         wRepartitionStationPrecedenceTemps.c
 )
+
