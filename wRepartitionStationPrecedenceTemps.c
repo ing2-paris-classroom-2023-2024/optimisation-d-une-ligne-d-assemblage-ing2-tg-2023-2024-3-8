@@ -1,5 +1,13 @@
 #include "ToolBoxWilliam.h"
 
+bool presentDansStation(int idTache, sPoste station) {
+    for(int i=0; i < station.cNombreTaches; i++) {
+        if(station.taches[i] == idTache) {
+            return true;
+        }
+    }
+    return false;
+}
 
 int getId(int index,sTache *prListeTache) {
     return prListeTache[index].id;
@@ -56,7 +64,7 @@ int wCalculerDegreeEntree(sTache *prTache, sTache *prlisteTache, int nbTaches) {
     prTache->degreeEntree = degre;
     return degre;
 }
-sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre) {
+sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre,float prTempsDeCycle) {
     // Initialiser les degrés d'entrée et les marques
     for (int i = 0; i < prParametre->cNombreOperations; i++) {
         prListeTache[i].degreeEntree = -1;
@@ -105,6 +113,90 @@ sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre) {
         int id = getId(i, prListeTache);
         printf("Tache %d (degre %d)\n", id, prListeTache[i].degreeEntree);
     }
+    prParametre->cNombreTacheAvecSucesseur=countAvec;
+    wRepartitionStationTempsSansTri(prListeTache,prTempsDeCycle,prParametre);
     return prListeTache;
 }
+
+
+sPoste* wRepartitionStationTempsSansTri(sTache* prTabTache, float prTempsDeCycle, sParametre *prParametre) {
+    int vNombreTaches = prParametre->cNombreOperations;
+    sPoste *tListePoste = (sPoste *) malloc(vNombreTaches * sizeof(sPoste));
+    if (!tListePoste) {
+        printf("Erreur d'allocation de mémoire pour tListePoste\n");
+        return NULL;
+    }
+
+    float tempsActuel = 0.0;
+    int vIndexStation = 0;
+
+    // Initialisation de la première station
+    tListePoste[vIndexStation].taches = (int *) malloc(sizeof(int));
+    tListePoste[vIndexStation].cNombreTaches = 0;
+
+    for (int i = 0; i < prParametre->cNombreTacheAvecSucesseur; i++) {
+        sTache tacheCourante = prTabTache[i];
+
+        if (tempsActuel + tacheCourante.temps <= prTempsDeCycle) {
+            // Ajouter la tâche à la station actuelle
+            int indexTache = tListePoste[vIndexStation].cNombreTaches;
+            int *temp = realloc(tListePoste[vIndexStation].taches, (indexTache + 1) * sizeof(int));
+            if (!temp) {
+                printf("Erreur de réallocation pour tListePoste[%d].taches\n", vIndexStation);
+                continue;
+            }
+
+            tListePoste[vIndexStation].taches = temp;
+            tListePoste[vIndexStation].taches[indexTache] = tacheCourante.id;
+            tListePoste[vIndexStation].cNombreTaches++;
+            tempsActuel += tacheCourante.temps;
+        } else {
+            // Créer une nouvelle station et y placer la tâche
+            vIndexStation++;
+            tListePoste[vIndexStation].taches = (int *) malloc(sizeof(int));
+            tListePoste[vIndexStation].taches[0] = tacheCourante.id;
+            tListePoste[vIndexStation].cNombreTaches = 1;
+            tempsActuel = tacheCourante.temps;  // Réinitialiser le temps pour la nouvelle station
+        }
+    }
+    for (int i = prParametre->cNombreTacheAvecSucesseur; i<vNombreTaches;i++) {
+        sTache tacheCourante = prTabTache[i];
+
+        if (tempsActuel + tacheCourante.temps <= prTempsDeCycle) {
+            // Ajouter la tâche à la station actuelle
+            int indexTache = tListePoste[vIndexStation].cNombreTaches;
+            int *temp = realloc(tListePoste[vIndexStation].taches, (indexTache + 1) * sizeof(int));
+            if (!temp) {
+                printf("Erreur de réallocation pour tListePoste[%d].taches\n", vIndexStation);
+                continue;
+            }
+
+            tListePoste[vIndexStation].taches = temp;
+            tListePoste[vIndexStation].taches[indexTache] = tacheCourante.id;
+            tListePoste[vIndexStation].cNombreTaches++;
+            tempsActuel += tacheCourante.temps;
+        } else {
+            // Créer une nouvelle station et y placer la tâche
+            vIndexStation++;
+            tListePoste[vIndexStation].taches = (int *) malloc(sizeof(int));
+            tListePoste[vIndexStation].taches[0] = tacheCourante.id;
+            tListePoste[vIndexStation].cNombreTaches = 1;
+            tempsActuel = tacheCourante.temps;  // Réinitialiser le temps pour la nouvelle station
+        }
+    }
+    // Affichage des stations et de leurs tâches
+    printf("Repartition des tâches dans les stations :\n");
+    for (int i = 0; i <= vIndexStation; i++) {
+        printf("Station %d: ", i);
+        for (int j = 0; j < tListePoste[i].cNombreTaches; j++) {
+            printf("%d ", tListePoste[i].taches[j]);
+        }
+        printf(" - Total des taches: %d\n", tListePoste[i].cNombreTaches);
+    }
+
+    return tListePoste;
+}
+
+
+
 

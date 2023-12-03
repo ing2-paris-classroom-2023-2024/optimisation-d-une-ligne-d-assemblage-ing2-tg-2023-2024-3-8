@@ -13,8 +13,7 @@ int main(){
     float *pTempsDeCycle=&vTempsDeCycle;
     tListeTache=wReadFileTimeOperation(pTempsDeCycle,sParametreListe);
     //wRepartitionStationTemps(tListeTache,vTempsDeCycle,sParametreListe);
-    wTriTopologique(tListeTache,sParametreListe);
-    wRepartitionStationTempsSansTri(tListeTache,vTempsDeCycle,sParametreListe);
+    wTriTopologique(tListeTache,sParametreListe,vTempsDeCycle);
     return 0;
 }
 
