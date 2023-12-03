@@ -12,8 +12,8 @@ int main(){
     float vTempsDeCycle=0;
     float *pTempsDeCycle=&vTempsDeCycle;
     tListeTache=wReadFileTimeOperation(pTempsDeCycle,sParametreListe);
-    //wTriTopologique(tListeTache,tListeTache[0].id);
     wRepartitionStationTemps(tListeTache,vTempsDeCycle,sParametreListe);
+    wTriTopologique(tListeTache,sParametreListe);
     return 0;
 }
 

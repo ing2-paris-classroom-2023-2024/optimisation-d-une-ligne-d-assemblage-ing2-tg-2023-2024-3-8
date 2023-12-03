@@ -38,10 +38,9 @@ sTache* wReadFileTimeOperation(float* prTempsDeCycle,sParametre * prParametreLis
 void wReadFilePrecedentOperation(sTache *prListeTache,sParametre* prParametre);
 
 
-
+//Repartition uniquement selon le temps
 sPoste* wRepartitionStationTemps(sTache* prTabTache,float prTempsDeCycle,sParametre* prParametre);
 
 //Precedence
-
-sTache* wTriTopologique(sTache* prListeTache, int nbTaches);
+sTache* wTriTopologique(sTache* prListeTache, sParametre *prParametre);
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_TOOLBOXWILLIAM_H
