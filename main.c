@@ -14,12 +14,13 @@
 #include "ContrainteTemps.h"
 #include "william.h"
 
-int nbTaches;
-poste* postes;
-int idMaxPrec;
-int ** matricePrec;
-int temps;
+
 int main(){
+    int nbTaches;
+    poste* postes;
+    int idMaxPrec;
+    int ** matricePrec;
+    int temps;
     FILE *tempsExec = fopen("temps_cycle.txt", "r");
 
     if (tempsExec == NULL) {
