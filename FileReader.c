@@ -4,7 +4,7 @@
 
 #include "ToolBoxWilliam.h"
 
-sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
+sTache * wReadFileTimeOperation(float* prTempsDeCycle,sParametre* prParametre) {
 
     //Declaration des variables
     FILE *fFile;
@@ -34,12 +34,12 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     if (v2 != '\n')
         vNombreLignes++; /* Dernière ligne non finie */
     // Utilisez fseek pour déplacer le curseur au début du fichier
-    printf("Le nombre de lignes est de %d",vNombreLignes);
+    //printf("Le nombre de lignes est de %d",vNombreLignes);
+    prParametre->cNombreOperations=vNombreLignes;
     fseek(fFile, 0, SEEK_SET);
 
-    sTache *tListeTache = (sTache *)malloc((vNombreLignes+1) * sizeof(sTache));
-    tListeTache[0].id=vNombreLignes;
-    for (int i=1;i<vNombreLignes+1;i++){
+    sTache *tListeTache = (sTache *)malloc((vNombreLignes) * sizeof(sTache));
+    for (int i=0;i<vNombreLignes;i++){
         fscanf(fFile,"%d %f",&tListeTache[i].id,&tListeTache[i].temps);
     }
     fclose(fFile);
@@ -52,13 +52,14 @@ sTache * wReadFileTimeOperation(float* prTempsDeCycle) {
     fscanf(fFile,"%f",prTempsDeCycle);
     fclose(fFile);
 
-    wReadFilePrecedentOperation(tListeTache);
+    wReadFilePrecedentOperation(tListeTache,prParametre);
     return tListeTache;
 }
 //---------------------------------------------------------------------------------------------------------------------
-void wReadFilePrecedentOperation(sTache *prListeTache) {
+void wReadFilePrecedentOperation(sTache *prListeTache,sParametre* prParametre) {
     FILE *fFile;
     int precedent, actuel;
+    int vNombreOperations=prParametre->cNombreOperations;
 
     fFile = fopen("../FichiersTxt/precedences.txt", "r");
     if (fFile == NULL) {
@@ -66,22 +67,22 @@ void wReadFilePrecedentOperation(sTache *prListeTache) {
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 1; i <= prListeTache[0].id; i++) {
+    for (int i = 0; i < vNombreOperations; i++) {
         prListeTache[i].tListeTachePrecedente = NULL;
-        prListeTache[i].nbPrecedentes = 0;
+        prListeTache[i].nbPredecesseur = 0;
     }
 
     while (fscanf(fFile, "%d %d", &precedent, &actuel) == 2) {
-        for(int i=1;i<prListeTache[0].id;i++){
+        for(int i=0;i<vNombreOperations;i++){
             if(prListeTache[i].id==actuel){
-                prListeTache[i].nbPrecedentes++;
-                int *temp = realloc(prListeTache[i].tListeTachePrecedente, prListeTache[i].nbPrecedentes * sizeof(int));
+                prListeTache[i].nbPredecesseur++;
+                int *temp = realloc(prListeTache[i].tListeTachePrecedente, prListeTache[i].nbPredecesseur * sizeof(int));
                 if (temp == NULL) {
                     printf("Erreur d'allocation");
                     exit(EXIT_FAILURE);
                 } else {
                     prListeTache[i].tListeTachePrecedente = temp;
-                    prListeTache[i].tListeTachePrecedente[prListeTache[i].nbPrecedentes - 1] = precedent;
+                    prListeTache[i].tListeTachePrecedente[prListeTache[i].nbPredecesseur -1] = precedent;
                 }
             }
         }

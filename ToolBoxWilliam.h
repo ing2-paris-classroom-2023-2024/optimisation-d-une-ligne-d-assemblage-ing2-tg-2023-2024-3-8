@@ -12,25 +12,36 @@
 
 typedef struct Tache{
     int id;
+    int marque;
     int col;
+    int degreeEntree;
     float temps;
-    int nbPrecedentes;
+    int nbPredecesseur;
     int *tListeTachePrecedente;
 }sTache;
+
+typedef struct parametre{
+    int cNombreOperations;
+}sParametre;
 
 typedef struct{
     int id; //chaque sPoste suit le suivant: une opération b dépedant de a pourra se trouver dans la station n si a est effectué par la station m<n
     int* taches;
     float tpsTot;//temps cumulé des opérations étant effectuées dans  cette station
+    int cNombreTaches;
 }sPoste;
 
 //Prototype des programmes
 
-//Temps de cycle et lecture fichier
-sTache* wReadFileTimeOperation(float* prTempsDeCycle);
-sPoste* wRepartitionStationTemps(sTache* prTabTache,float prTempsDeCycle);
+//Lecture du fichier
+sTache* wReadFileTimeOperation(float* prTempsDeCycle,sParametre * prParametreListe);
+void wReadFilePrecedentOperation(sTache *prListeTache,sParametre* prParametre);
+
+
+
+sPoste* wRepartitionStationTemps(sTache* prTabTache,float prTempsDeCycle,sParametre* prParametre);
 
 //Precedence
- void wReadFilePrecedentOperation(sTache *prListeTache);
-int caPrecedence();
+
+sTache* wTriTopologique(sTache* prListeTache, int nbTaches);
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_TOOLBOXWILLIAM_H

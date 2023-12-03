@@ -8,11 +8,12 @@
 
 int main(){
     sTache *tListeTache;
+    sParametre *sParametreListe=(sParametre*)malloc(sizeof(sParametre));
     float vTempsDeCycle=0;
     float *pTempsDeCycle=&vTempsDeCycle;
-    tListeTache=wReadFileTimeOperation(pTempsDeCycle);
-    wRepartitionStationTemps(tListeTache,vTempsDeCycle);
-    caPrecedence();
+    tListeTache=wReadFileTimeOperation(pTempsDeCycle,sParametreListe);
+    //wTriTopologique(tListeTache,tListeTache[0].id);
+    wRepartitionStationTemps(tListeTache,vTempsDeCycle,sParametreListe);
     return 0;
 }
 

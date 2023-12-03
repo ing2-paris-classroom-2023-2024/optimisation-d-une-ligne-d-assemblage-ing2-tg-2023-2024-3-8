@@ -4,19 +4,19 @@
 
 #include "ToolBoxWilliam.h"
 
-sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
+sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle,sParametre *prParametre) {
 //https://www.geeksforgeeks.org/program-best-fit-algorithm-memory-management/ UTilisation d'un algorithmme de type best fit
     //Nombre de taches
-    int vNombreTaches = prTabTache[0].id;
+    int vNombreTaches = prParametre->cNombreOperations;
 
 
     //Variables pour les stations
     //Création d'une liste de vNombreTaches stations
-    sPoste *tListePoste = (sPoste *) malloc((vNombreTaches + 1) * sizeof(sPoste));
+    sPoste *tListePoste = (sPoste *) malloc((vNombreTaches) * sizeof(sPoste));
     //Index de la station (commence à -1 car le numéro de la station commence à 0)
     int vIndexStation = -1;
     //Tableau contenant les temps totaux de chaque station
-    float *vTempsParStation = (float *) malloc((vNombreTaches + 1) * sizeof(float));
+    float *vTempsParStation = (float *) malloc((vNombreTaches) * sizeof(float));
 
     //Variable temporaire pour le tri à bulles
     sTache sTacheTemp;
@@ -28,8 +28,8 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
     }
 
     // Tri à bulles
-    for (int i = 1; i <= vNombreTaches - 1; i++) {
-        for (int j = 1; j <= vNombreTaches - i; j++) {
+    for (int i = 0; i < vNombreTaches - 1; i++) {
+        for (int j = 0; j < vNombreTaches - i; j++) {
             if (prTabTache[j].temps < prTabTache[j+1].temps) {
                 sTacheTemp = prTabTache[j];
                 prTabTache[j] = prTabTache[j+1];
@@ -39,20 +39,20 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
     }
 
     //Boucle principale
-    for (int vTaches = 1; vTaches <= vNombreTaches; vTaches++) {
+    for (int vTaches = 0; vTaches < vNombreTaches; vTaches++) {
         //On parcourt chaque tache et on la stocke dans une variable temporaire
         sTache tacheCourante = prTabTache[vTaches];
         //la tache pour l'instant n'est pas placé
         bool TachePlace = false;
 
-        // Veirifie toutes les stations existantes pour placer la tâche
+        // Verifie toutes les stations existantes pour placer la tâche
         for (int vNumeroStationExistantes = 0; vNumeroStationExistantes <= vIndexStation; vNumeroStationExistantes++) {
             //Contrainte de temps
             if (vTempsParStation[vNumeroStationExistantes] + tacheCourante.temps <= prTempsDeCycle) {
                 // Ajoute la tâche à cette station
 
                 //Stocke le nombre de taches de la station dans le premier élement de la station
-                int vNombreTacheStation = tListePoste[vNumeroStationExistantes].taches[0];
+                int vNombreTacheStation = tListePoste[vNumeroStationExistantes].cNombreTaches;
 
                 //Realloue le tableau des taches de la station pour y accueilir uniquement les taches qui sont dedans
                 tListePoste[vNumeroStationExistantes].taches = realloc(tListePoste[vNumeroStationExistantes].taches,
@@ -61,8 +61,7 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
                 //Ajoute la tache au vNombreTacheStation+1 ème élement du tableau
                 tListePoste[vNumeroStationExistantes].taches[vNombreTacheStation + 1] = tacheCourante.id;
 
-                tListePoste[vNumeroStationExistantes].taches[0] =
-                        vNombreTacheStation + 1; // Mets à jour le nombre de tâches
+                tListePoste[vNumeroStationExistantes].cNombreTaches =tListePoste[vNumeroStationExistantes].cNombreTaches + 1; // Mets à jour le nombre de tâches
                 vTempsParStation[vNumeroStationExistantes] += tacheCourante.temps;//Met à jour le temps total de la station
                 TachePlace = true;//La tache est placé
                 break;
@@ -74,8 +73,8 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
             vIndexStation++;
             tListePoste[vIndexStation].id = vIndexStation;
             tListePoste[vIndexStation].taches = (int *) realloc(tListePoste[vIndexStation].taches, 2 * sizeof(int));
-            tListePoste[vIndexStation].taches[0] = 1; // Initialiser à 1 tâche
-            tListePoste[vIndexStation].taches[1] = tacheCourante.id;
+            tListePoste[vIndexStation].cNombreTaches = 1; // Initialiser à 1 tâche
+            tListePoste[vIndexStation].taches[0] = tacheCourante.id;
             vTempsParStation[vIndexStation] = tacheCourante.temps;
         }
     }
@@ -96,10 +95,11 @@ sPoste* wRepartitionStationTemps(sTache* prTabTache, float prTempsDeCycle) {
     printf("Nombre de stations : %d\n", vIndexStation + 1);
     for (int i = 0; i <= vIndexStation; i++) {
         printf("Station %d : ", i);
-        for (int j = 1; j <= tListePoste[i].taches[0]; j++) {
+        // Affiche toutes les tâches de la station, en commençant à l'indice 1
+        for (int j = 1; j <= tListePoste[i].cNombreTaches; j++) {
             printf("%d ", tListePoste[i].taches[j]);
         }
-        printf("Nombre de taches dans la station: %d",tListePoste[i].taches[0]);
+        printf(" - Nombre total de taches dans la station: %d", tListePoste[i].cNombreTaches);
         printf("\n");
     }
     return tListePoste;
