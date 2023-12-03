@@ -82,7 +82,7 @@ void genererStations(struct Probleme* probleme) {
     }
 }
 
-int main() {
+int precedenceEtExclusion() {
     struct Probleme monProbleme;
     int nbTacheexclu,nbTacheprece;
 
