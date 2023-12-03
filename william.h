@@ -40,7 +40,7 @@ tache * wReadFileTimeOperation(int* nbtache) {
     if (v2 != '\n')
         vNombreLignes++; /* Dernière ligne non finie */
     // Utilisez fseek pour déplacer le curseur au début du fichier
-    printf("Le nombre de lignes est de %d\n",vNombreLignes);
+    //printf("Le nombre de lignes est de %d\n",vNombreLignes);
     *nbtache= vNombreLignes;
     fseek(fFile, 0, SEEK_SET);
 
