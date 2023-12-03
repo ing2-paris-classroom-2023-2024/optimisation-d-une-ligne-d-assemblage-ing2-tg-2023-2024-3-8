@@ -17,7 +17,9 @@ typedef struct Tache{
     int degreeEntree;
     float temps;
     int nbPredecesseur;
+    int nbSuccesseurs;
     int *tListeTachePrecedente;
+    bool estSansSuccesseur;
 }sTache;
 
 typedef struct parametre{
