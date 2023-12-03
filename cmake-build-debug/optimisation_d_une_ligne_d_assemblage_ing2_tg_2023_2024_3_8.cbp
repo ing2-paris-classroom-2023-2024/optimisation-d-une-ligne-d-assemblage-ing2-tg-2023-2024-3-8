@@ -76,7 +76,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/AffichageConsole.c">
+		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/ContraintePrecedences.c">
+			<Option target="optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8"/>
+		</Unit>
+		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/ContraintePrecedences.h">
+			<Option target="optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8"/>
+		</Unit>
+		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/Exclusionalexandre.h">
+			<Option target="optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8"/>
+		</Unit>
+		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/Exclusionalexandre2.h">
 			<Option target="optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8"/>
 		</Unit>
 		<Unit filename="C:/Users/cleme/CLionProjects/optimisation-d-une-ligne-d-assemblage-ing2-tg-2023-2024-3-8/CMakeLists.txt">
