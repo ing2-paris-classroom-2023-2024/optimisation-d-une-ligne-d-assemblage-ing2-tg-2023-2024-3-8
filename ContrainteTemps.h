@@ -95,8 +95,11 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
                 tachesCol[colorSelec][i].temps=-1;
             }
         }
-        colorSelec=(colorSelec+1)%nbCol;/*on passe à la couleur suivante (le % signifie modulo)
+        /*colorSelec=(colorSelec+1)%nbCol;on passe à la couleur suivante (le % signifie modulo)
         Le plus pertinent ici serait tout de même de trouver un moyen de choisir à chaque fois quelle couleur il vaut mieux utiliser*/
+        colorSelec= determinerCouleur(base,idMaxPrec,MatricePrec,tachesCol,repartCol,nbCol);
+        //printf("passage a la couleur %d\n",colorSelec);
+
         if(!(postes->tpsTot==0)){
             printf("Temps total du poste: %f/%d (couleur:%d)\n",postes->tpsTot,T0,postes->col);
             indicapost++;
@@ -110,7 +113,7 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
                 printf("\nfin de boucle: passage au poste %d\n", indicapost);
             }
         }
-        postes= ajouterPoste(postes,repartCol[colorSelec]);
+        //postes= ajouterPoste(postes,repartCol[colorSelec]);
     }
     for (int i = 0; i < nbCol; ++i) {
         free(tachesCol[i]);

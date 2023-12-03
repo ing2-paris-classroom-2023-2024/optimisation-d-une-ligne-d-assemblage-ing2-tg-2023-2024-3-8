@@ -63,6 +63,30 @@ int precedence(poste* base,int sommet,int idMax,int** matricePrec){
     return 1;
 }
 
+int determinerCouleur(poste* base,int idMax,int** matricePrec, tache** tachesCol,int* repartCol,int nbCol){
+    int maxCol=0;
+    int colI;
+    int bonCol;
+    int valide;
+    //printf("nbcol :%d\n",nbCol);
+    for (int i = 0; i < nbCol; ++i) {
+        colI=0;
+        for (int j = 0; j < repartCol[i]; ++j) {
+            //printf("%d",tachesCol[i][j].id);
+            //printf("(%d) ",valide);
+            valide=precedence(base,tachesCol[i][j].id,idMax,matricePrec);
+            if(valide==1 && tachesCol[i][j].temps!=-1) colI++;
+        }
+        //printf("\n ->%d \n",i);
+        if(maxCol<colI) {
+            bonCol=i;
+            maxCol=colI;
+        }
+    }
+    //printf("Sortie de DeterminerCouleur\n");
+    return bonCol;
+}
+
 
 
 
