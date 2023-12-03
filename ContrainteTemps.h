@@ -1,9 +1,10 @@
 
 #ifndef OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTETEMPS_H
 #define OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTETEMPS_H
-#include "Exclusion_et_Exclusion_TempsDeCycles.h"
 
-poste* ajouterPoste(poste* poste1,int taille){
+#include "ExclusionClem.h"
+
+poste* ajouterPoste(poste* poste1, int taille){
     poste* poste2= malloc(sizeof(poste*));
     poste1->suivant=poste2;
     poste2->taches= malloc(taille*sizeof(tache));
@@ -24,7 +25,7 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
     }
 
     int couleurs[idmax];
-    listeCol(&nbCol, couleurs,ignorerCol);
+    listeColl(&nbCol, couleurs,ignorerCol);
     if(ignorerCol)nbCol=1;
     tache** tachesCol=malloc(nbCol*(sizeof(tache**)));
     int* repartCol= malloc(nbCol*(sizeof(int*)));//allocation de la liste pour chaque couleur

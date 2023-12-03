@@ -1,8 +1,5 @@
 #ifndef OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTEPRECEDENCE_H
 #define OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_CONTRAINTEPRECEDENCE_H
-#include <stdio.h>
-#include <stdlib.h>
-#include "structures.h"
 
 int** creerPrec(int* idMaxPrec){
     FILE *precedences = fopen("precedences.txt", "r");
