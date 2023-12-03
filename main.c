@@ -1,8 +1,9 @@
 //
 // Created by William on 12/11/2023.
 //
-#define IgnorerPrecedence 0
-#define IgnorerTemps 0
+#define ignorerPrecedence 0
+#define ignorerTemps 0
+#define ignorerCouleur 0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +18,7 @@ int nbTaches;
 poste* postes;
 int idMaxPrec;
 int ** matricePrec;
-float temps;
+int temps;
 int main(){
     FILE *tempsExec = fopen("temps_cycle.txt", "r");
 
@@ -25,7 +26,7 @@ int main(){
         printf("Erreur lors de l'ouverture du fichier");
         return 0;
     }
-    fscanf(tempsExec,"%f",&temps);
+    fscanf(tempsExec,"%d",&temps);
     fclose(tempsExec);
     nbTaches=0;
     tache* taches= NULL;
@@ -33,7 +34,7 @@ int main(){
 
     //printf("oui ?");
     matricePrec=creerPrec(&idMaxPrec);
-    postes= exclusion(taches,nbTaches,temps,matricePrec,idMaxPrec);
+    postes= exclusion(taches,nbTaches,temps,matricePrec,idMaxPrec,ignorerCouleur,ignorerTemps,ignorerPrecedence);
     //affichageExclusion();*
 
     return 0;

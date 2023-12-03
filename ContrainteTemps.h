@@ -18,7 +18,7 @@ poste* ajouterPoste(poste* poste1,int taille){
 
 
 
-poste* exclusion(tache* taches,int nbTaches,float T0,int** MatricePrec,int idMaxPrec){
+poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPrec,int ignorerCol, int IgnorerTemps,int IgnorerPrecedence){
     int nbCol=0;
 
     int idmax=0;
@@ -27,7 +27,8 @@ poste* exclusion(tache* taches,int nbTaches,float T0,int** MatricePrec,int idMax
     }
 
     int couleurs[idmax];
-    listeCol(&nbCol, couleurs);
+    listeCol(&nbCol, couleurs,ignorerCol);
+    if(ignorerCol)nbCol=1;
     tache** tachesCol=malloc(nbCol*(sizeof(tache**)));
     int* repartCol= malloc(nbCol*(sizeof(int*)));//allocation de la liste pour chaque couleur
     for (int i = 0; i < nbCol; ++i) {
@@ -36,10 +37,8 @@ poste* exclusion(tache* taches,int nbTaches,float T0,int** MatricePrec,int idMax
     for (int i = 0; i < nbCol; ++i){//initialisation de repartCol
         repartCol[i]=0;
     }
-
     for (int i = 0; i < nbTaches; ++i) {//on met chaque tâche dans la liste qui correspond à sa couleur&
         taches[i].col=couleurs[taches[i].id];
-
         tachesCol[taches[i].col][repartCol[taches[i].col]]=taches[i];
         repartCol[taches[i].col]++;
     }
@@ -101,7 +100,7 @@ poste* exclusion(tache* taches,int nbTaches,float T0,int** MatricePrec,int idMax
         //printf("passage a la couleur %d\n",colorSelec);
 
         if(!(postes->tpsTot==0)){
-            printf("Temps total du poste: %f/%f (couleur:%d)\n",postes->tpsTot,T0,postes->col);
+            printf("Temps total du poste: %f/%d (couleur:%d)\n",postes->tpsTot,T0,postes->col);
             indicapost++;
         }
         if(nbTachesEnreg<nbTaches ){
