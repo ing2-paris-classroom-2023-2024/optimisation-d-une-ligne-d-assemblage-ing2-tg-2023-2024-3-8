@@ -8,7 +8,6 @@
 #include "ToolBoxWilliam.h"
 
 
-
 typedef struct Workstation {
     int  num; // numero de la station de travail
     int  nbTaches;     // nombres de tâches de la station de travail
@@ -39,6 +38,6 @@ void affichageExclusionBis();
 
 float lireTemps_cycle();
 
-void exclusionEtTempsCycle();
-
+int exclusionEtTempsCycle();
 #endif //OPTIMISATION_D_UNE_LIGNE_D_ASSEMBLAGE_ING2_TG_2023_2024_3_8_EXCLUSIONALEXANDRE_H
+

@@ -152,30 +152,6 @@ Exclusionalexandre.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir\build.make CMakeFiles/optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir/Exclusionalexandre.c.s
 .PHONY : Exclusionalexandre.c.s
 
-PrecedenceAlexandre.obj: PrecedenceAlexandre.c.obj
-.PHONY : PrecedenceAlexandre.obj
-
-# target to build an object file
-PrecedenceAlexandre.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir\build.make CMakeFiles/optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir/PrecedenceAlexandre.c.obj
-.PHONY : PrecedenceAlexandre.c.obj
-
-PrecedenceAlexandre.i: PrecedenceAlexandre.c.i
-.PHONY : PrecedenceAlexandre.i
-
-# target to preprocess a source file
-PrecedenceAlexandre.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir\build.make CMakeFiles/optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir/PrecedenceAlexandre.c.i
-.PHONY : PrecedenceAlexandre.c.i
-
-PrecedenceAlexandre.s: PrecedenceAlexandre.c.s
-.PHONY : PrecedenceAlexandre.s
-
-# target to generate assembly for a file
-PrecedenceAlexandre.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir\build.make CMakeFiles/optimisation_d_une_ligne_d_assemblage_ing2_tg_2023_2024_3_8.dir/PrecedenceAlexandre.c.s
-.PHONY : PrecedenceAlexandre.c.s
-
 timeOperation.obj: timeOperation.c.obj
 .PHONY : timeOperation.obj
 
@@ -212,9 +188,6 @@ help:
 	@echo ... Exclusionalexandre.obj
 	@echo ... Exclusionalexandre.i
 	@echo ... Exclusionalexandre.s
-	@echo ... PrecedenceAlexandre.obj
-	@echo ... PrecedenceAlexandre.i
-	@echo ... PrecedenceAlexandre.s
 	@echo ... timeOperation.obj
 	@echo ... timeOperation.i
 	@echo ... timeOperation.s

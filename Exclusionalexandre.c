@@ -34,7 +34,7 @@ int** ContrainteExclusion(char* nomFichier,int* ordremat){
     }
     *ordremat=ordre+1;
 #ifdef DEBUG
-    printf("ordre: %d\n",ordre);
+    printf("[DEBUG]:ordre: %d\n",ordre);
 #endif
 
     ///Création d'une matrice d'adjacence selon l'ordre trouvé
@@ -71,6 +71,7 @@ int** ContrainteExclusion(char* nomFichier,int* ordremat){
 
     ///debug matrice
 #ifdef DEBUG
+    printf("[DEBUG]:\n");
     for(j=0;j<ordre+1;j++){
         for(k=0;k<ordre+1;k++){
             printf("%d ",matrice[j][k]);
@@ -197,7 +198,7 @@ int* traiteExclusion(sTache* tListeTache, int*  nombreDeWS, int** exclusion_adj)
         tListeTache[i].col = couleur[tListeTache[i].id];
         // debug
 #ifdef DEBUG
-        printf("tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
+        printf("[DEBUG]:tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
 #endif
 
     }
@@ -241,7 +242,7 @@ void affichageExclusion() {
         tListeTache[i].col = couleur[tListeTache[i].id];
         // debug
 #ifdef DEBUG
-        printf("tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
+        printf("[DEBUG]:tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
 #endif
     }
 
@@ -274,9 +275,9 @@ void affichageExclusion() {
         }
     }
     ///////////////////AFFICHAGE DE LA SOLUTION
-    printf("Le nombre de stations est : %d\n",nombreDeWS);
+    printf("Le nombre de stations est : %d - nota: pas de prise en compte du temps d'execution.. il peut y avoir des taches qui n'existeront pas\n",nombreDeWS);
     for(i=0;i<nombreDeWS; i++){
-        printf("Workstation %d : ",i);
+        printf("Station [%d] : ",i);
         for(k=0;k<LigneAssemblage.WS[i].nbTaches;k++){
             printf("%d ",LigneAssemblage.WS[i].taches[k]);
         }
@@ -300,7 +301,7 @@ void affichageExclusionBis() {
 
     //    lit les tâches pour savoir celles qui existent
 #ifdef DEBUG
-    printf("Lecture des temps d'operation ok; Nombre d'operations a realiser : %d\n",tListeTache[0].id);
+    printf("[DEBUG]:Lecture des temps d'operation ok; Nombre d'operations a realiser : %d\n",tListeTache[0].id);
 #endif
 
     /// Met à jour la liste des tâches avec la bonne couleur
@@ -308,10 +309,9 @@ void affichageExclusionBis() {
         tListeTache[i].col = couleur[tListeTache[i].id];
         // debug
 #ifdef DEBUG
-        printf("tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
+        printf("[DEBUG]:tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
 #endif
     }
-
 }
 
 float lireTemps_cycle(){
@@ -335,7 +335,7 @@ float lireTemps_cycle(){
 /***********************************************************************/
 /*                                           */
 
-void exclusionEtTempsCycle(){
+int exclusionEtTempsCycle(){
     int ordremat;
     int** exclusion_adj;
     int* couleur;
@@ -346,7 +346,7 @@ void exclusionEtTempsCycle(){
 
     // debug
 #ifdef DEBUG
-    printf("Tc = %f \n", Tc);
+    printf("[DEBUG]:Tc = %f \n", Tc);
 #endif
 
     sTache *tListeTache;
@@ -355,7 +355,7 @@ void exclusionEtTempsCycle(){
 
     //    lit les tâches pour savoir celles qui existent
 #ifdef DEBUG
-    printf("Lecture des temps d'operation ok; Nombre d'operations a realiser : %d\n",tListeTache[0].id);
+    printf("[DEBUG]:Lecture des temps d'operation ok; Nombre d'operations a realiser : %d\n",tListeTache[0].id);
 #endif
 
     /// Met à jour la liste des tâches avec la bonne couleur
@@ -363,19 +363,24 @@ void exclusionEtTempsCycle(){
         tListeTache[i].col = couleur[tListeTache[i].id];
         // debug
 #ifdef DEBUG
-        printf("tache[id=%d, col=%d, temps=%f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
+        printf("[DEBUG]:tache[id=%d, col=%d, temps=%.2f] \n", tListeTache[i].id, tListeTache[i].col, tListeTache[i].temps );
 #endif
     }
 
     // Crée une liste de stations de travail tenant compte de l'exclusion
     listePostesExcl = (sPoste**) malloc(nombreDeWS*sizeof(sPoste*));
-
+    
+    int nbSsStat;
+    int nbStationInFine = 0;
     // Traite chacune des workstations en contrainte de temps
     for(i=0; i<nombreDeWS; i++){
-        listePostesExcl[i] = wRepartitionStationTempsCol(tListeTache, i, Tc);
+        listePostesExcl[i] = wRepartitionStationTempsCol(tListeTache, i, Tc, &nbSsStat);
+        nbStationInFine += nbSsStat;
     }
     // Traite chacune des workstations en contrainte de temps
+    //printf("NbSSsation : %d\n",nbStationInFine);
 
+    return nbStationInFine;
 }
 
 
@@ -386,6 +391,7 @@ int main(){
     affichageExclusion();
 
     printf("\n\n---------- Contraintes d'exclusion et temps de cycle max ------------\n");
-    exclusionEtTempsCycle();
+    int nbInFine = exclusionEtTempsCycle();
+    printf("\nNombre de stations final : %d",nbInFine);
 
 }

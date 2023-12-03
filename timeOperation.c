@@ -1,3 +1,4 @@
+#define DEB
 
 #include "ToolBoxWilliam.h"
 
@@ -33,7 +34,7 @@ sTache * wReadFileTimeOperation() {
         vNombreLignes++; /* Dernière ligne non finie */
     // Utilisez fseek pour déplacer le curseur au début du fichier
 #ifdef DEBUG
-    printf("Le nombre de lignes lues est de %d\n",vNombreLignes);
+    printf("[DEBUG]:Le nombre de lignes lues est de %d\n",vNombreLignes);
 #endif
     fseek(fFile, 0, SEEK_SET);
 
@@ -47,10 +48,18 @@ sTache * wReadFileTimeOperation() {
 }
 
 
-sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
+sPoste* wRepartitionStationTempsCol(sTache* tabTache, int col, float Tc, int* nbSsStations) {
     // Déclaration des variables
-    int vNombreTaches = prTabTache[0].id;
+    int vNombreTaches = tabTache[0].id;
     sTache sTacheTemp;
+
+    // copie liste des taches
+    sTache* prTabTache = (sTache*) malloc((vNombreTaches+1)*sizeof(sTache));
+    for(int k=0; k <= vNombreTaches; k++){
+        prTabTache[k].col = tabTache[k].col;
+        prTabTache[k].id  = tabTache[k].id;
+        prTabTache[k].temps = tabTache[k].temps;
+    }
 
     // Création de la liste des postes que l'on modifiera dynamiquement
     sPoste *tListePoste = (sPoste *) malloc((vNombreTaches + 1) * sizeof(sPoste));
@@ -59,7 +68,7 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
         tListePoste[j].taches = (int *) malloc(sizeof(int));
         tListePoste[j].taches[0] = 0; // Initialisez la taille du tableau de tâches à 0
     }
-    int vNombreStations = 0; // Nombre de stations actuelles
+    int vNombreStations = 1; // Nombre de stations actuelles
     float vTempsTotalStation = 0; // Temps total dans la station actuelle
 
     // Tri à bulles
@@ -73,6 +82,16 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
         }
     }
 
+#ifdef DEBUG
+    printf("\n[DEBUG]: station [%d] :",col);
+    for(int i=1; i<= vNombreTaches ; i++)
+        if (prTabTache[i].col == col)   
+            printf("%d ",prTabTache[i].id);
+        //else
+            //printf("//%d ",prTabTache[i].id); 
+    printf("\n");
+#endif
+
     for (int i = 1; i <= vNombreTaches; i++) {
         sTache tacheCourante = prTabTache[i];
         while (tacheCourante.col != col){
@@ -81,6 +100,9 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
                 break;
             tacheCourante = prTabTache[i];
         }
+#ifdef DEBUG
+        //printf("[DEBUG]:tacheCourante= %d,  \n",tacheCourante.id);
+#endif
 
         if (i>vNombreTaches)
             break;
@@ -90,6 +112,7 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
             int stationIndex = vNombreStations;
             int index = tListePoste[stationIndex].taches[0]; // Obtenir la taille actuelle
             tListePoste[stationIndex].taches[index + 1] = tacheCourante.id;
+            //printf("////tacheCourante.id == %d\n", tacheCourante.id);
             tListePoste[stationIndex].taches[0] = index + 1; // Mettre à jour la taille
             vTempsTotalStation += tacheCourante.temps;
             tListePoste[stationIndex].tpsTot = vTempsTotalStation; // Mettre à jour le temps total
@@ -108,13 +131,16 @@ sPoste* wRepartitionStationTempsCol(sTache* prTabTache, int col, float Tc) {
     }
 
     // Affichage du nombre de stations avec les tâches réalisées à l'intérieur
-    //printf("\nNombre de stations intial : %d\n", vNombreStations+1);
-    for (int i = 0; i <= vNombreStations; i++) {
-        printf("Station %d-%d : Ts=%f : ", col, i, tListePoste[i].tpsTot);
+    printf("\nStation[%d] - Nombre de sous-stations : %d\n", col, vNombreStations);
+    for (int i = 1; i <= vNombreStations; i++) {
+        printf("Station %d-%d : Ts=%.2f : ", col, i, tListePoste[i].tpsTot);
         for (int j = 1; j <= tListePoste[i].taches[0]; j++) {
             printf("%d ", tListePoste[i].taches[j]);
         }
         printf("\n");
     }
+    *nbSsStations = vNombreStations;
+    free(prTabTache);
+
     return tListePoste;
 }
