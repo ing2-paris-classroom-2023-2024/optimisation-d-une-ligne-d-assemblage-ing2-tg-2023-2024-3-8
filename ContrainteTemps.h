@@ -68,6 +68,7 @@ poste* exclusion(tache* taches,int nbTaches,int T0,int** MatricePrec,int idMaxPr
         }
         printf("\n");
     }*/
+    printf("Passage au poste [0]:\n");
     while (nbTachesEnreg<nbTaches){
         postes->col=colorSelec;
         for (int i = 0; i < repartCol[colorSelec]; ++i) {
